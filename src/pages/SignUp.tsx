@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { auth } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-
-const Login = () => {
-  const [loginAuth, setLoginAuth] = useState({
+import { createUserWithEmailAndPassword } from "firebase/auth";
+const SignUp = () => {
+  const [signUpAuth, setSignUpAuth] = useState({
     email: "",
     password: "",
   });
-
-  function loginAuthHandler(e: React.FormEvent<HTMLFormElement>) {
+  function signUpAuthHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(loginAuth);
-    signInWithEmailAndPassword(auth, loginAuth.email, loginAuth.password)
+    console.log(signUpAuth);
+    createUserWithEmailAndPassword(auth, signUpAuth.email, signUpAuth.password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -25,19 +23,18 @@ const Login = () => {
         // ..
       });
   }
-
   return (
     <div>
-      <h1>Login</h1>
-      <form onSubmit={loginAuthHandler}>
+      <h1>SignUp</h1>
+      <form onSubmit={signUpAuthHandler}>
         <input
           type="email"
           placeholder="Email"
+          value={signUpAuth.email}
           autoComplete="email"
-          value={loginAuth.email}
           onChange={(e) => {
-            setLoginAuth({
-              ...loginAuth,
+            setSignUpAuth({
+              ...signUpAuth,
               email: e.target.value,
             });
           }}
@@ -45,19 +42,19 @@ const Login = () => {
         <input
           type="password"
           placeholder="Password"
-          value={loginAuth.password}
+          value={signUpAuth.password}
           autoComplete="new-password"
           onChange={(e) => {
-            setLoginAuth({
-              ...loginAuth,
+            setSignUpAuth({
+              ...signUpAuth,
               password: e.target.value,
             });
           }}
         />
-        <input type="submit" value="Login" />
+        <input type="submit" value="sign Up" />
       </form>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;

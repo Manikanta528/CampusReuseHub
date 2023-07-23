@@ -1,8 +1,5 @@
-
 const UserChat = () => {
-  return (
-    <div>UserChat</div>
-  )
-}
+  return <div>UserChat</div>;
+};
 
-export default UserChat
+export default UserChat;

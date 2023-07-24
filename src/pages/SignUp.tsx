@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { HOME } from "../routes";
 const SignUp = () => {
+  const navigate = useNavigate();
   const [signUpAuth, setSignUpAuth] = useState({
     email: "",
     password: "",
   });
+
   function signUpAuthHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(signUpAuth);
@@ -13,6 +17,7 @@ const SignUp = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        navigate(HOME);
         console.log(user);
         // ...
       })

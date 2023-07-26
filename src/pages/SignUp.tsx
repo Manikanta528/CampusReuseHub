@@ -32,7 +32,8 @@ const SignUp = () => {
       });
   }
 
-  function signUpAuthHandler() {
+  function signUpAuthHandler(e: { preventDefault: () => void; }) {
+    e.preventDefault();
     if(signUpAuth.name.length < 4) {
       toast.error("Full name should be at least 4 characters long");
       return;

@@ -14,7 +14,8 @@ const Login = () => {
     password: "",
   });
 
-  function loginAuthHandler() {
+  function loginAuthHandler(e: { preventDefault: () => void; }) {
+    e.preventDefault();
     if(loginAuth.email.length < 1){
       toast.error("Email cannot be empty");
       return;

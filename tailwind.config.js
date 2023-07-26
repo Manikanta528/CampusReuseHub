@@ -11,7 +11,16 @@ export default {
       },
       backgroundSize :{
         '26' : '26px 26px',
-      }
+      },
+      animation: {
+        border: 'border 1s ease infinite',
+      },
+      keyframes: {
+        border: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+      },
     },
   },
   plugins: [],

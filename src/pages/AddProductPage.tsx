@@ -3,6 +3,10 @@ import { PLP } from "../utilities/routes";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toster ,{ Toaster } from "react-hot-toast";
+import { storage , db , auth } from "../utilities/firebase";
+import { ref , uploadBytes} from "firebase/storage";
+import { uid } from "uid";
+import { addDoc, collection } from "firebase/firestore"; 
 
 
 const AddProductPage = () => {
@@ -10,7 +14,7 @@ const AddProductPage = () => {
     const [productDetails, setProductDetails] = useState({
         productName : "",
         productDescription : "",
-        productPhoto : "",
+        productPhoto : null,
         collageName : "",
         city : "",
         state : "",
@@ -20,7 +24,7 @@ const AddProductPage = () => {
     } as {
         productName : string,
         productDescription : string,
-        productPhoto : string,
+        productPhoto : null | File,
         collageName : string,
         city : string,
         state : string,
@@ -28,6 +32,53 @@ const AddProductPage = () => {
         postalCode : string,
         productPrice : number,
     });
+
+    const uploadData = (productID: string, productDetails: {
+      productName : string,
+      productDescription : string,
+      productPhoto : null | File,
+      collageName : string,
+      city : string,
+      state : string,
+      country : string,
+      postalCode : string,
+      productPrice : number,
+    }) => {
+      const {
+        productName,
+        productDescription,
+        productPhoto,
+        collageName,
+        city,
+        state,
+        country,
+        postalCode,
+        productPrice,
+      } = productDetails;
+    
+      const storageRef = ref(storage, `products/${productID}`);
+      uploadBytes(storageRef, productPhoto).then(() => {
+        console.log('Uploaded a blob or file!');
+      }).then(() => {
+        const productsCollectionRef = collection(db, "products");
+        addDoc(productsCollectionRef, {
+          uid : productID,
+          productName : productName,
+          productDescription : productDescription,
+          productPhoto : `products/${productID}`,
+          collageName : collageName,
+          city : city,
+          state : state,
+          country : country,
+          postalCode : postalCode,
+          productPrice : productPrice,
+          timestamp : Date.now(),
+          sellerID : auth.currentUser?.uid,
+        })
+      })
+    
+      
+    }
 
     function addProductHandler(e: { preventDefault: () => void; }) {
         e.preventDefault();
@@ -89,10 +140,13 @@ const AddProductPage = () => {
             toster.error("Product price is required!");
             return;
           }
+          const productID = uid(16);
 
-        
+          uploadData(productID, productDetails);
           toster.success("Product added successfully!");
-          navigate(PLP);
+          setTimeout(() => {
+            navigate(PLP);
+          }, 1000);         
     }
 
 
@@ -231,7 +285,7 @@ const AddProductPage = () => {
                             onChange={(e) => {
                                 setProductDetails({
                                     ...productDetails,
-                                    productPhoto : e.target.value,
+                                    productPhoto : e.target.files[0],
                                 });
                             }}
                           />

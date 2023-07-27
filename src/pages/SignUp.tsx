@@ -6,7 +6,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { firebaseErrors } from "../utilities/firebaseErrors";
 
-import { PROFILE } from "../utilities/routes";
+import { PLP } from "../utilities/routes";
 
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -25,7 +25,7 @@ const SignUp = () => {
     const usersCollectionRef = collection(db, "users");
     addDoc(usersCollectionRef, user)
       .then(() => {
-        navigate(PROFILE);
+        navigate(PLP);
       })
       .catch((error) => {
         console.error("Error adding document: ", error);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { auth } from "../utilities/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { PROFILE } from "../utilities/routes";
+import { PLP } from "../utilities/routes";
 import toast,{ Toaster } from 'react-hot-toast';
 import { firebaseErrors } from "../utilities/firebaseErrors";
 
@@ -29,7 +29,7 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        navigate(PROFILE);
+        navigate(PLP);
         // ...
       })
       .catch((error) => {

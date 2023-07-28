@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import { db } from "../utilities/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { DocumentData, collection, getDocs } from "firebase/firestore";
 import { storage } from "../utilities/firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 
@@ -20,7 +20,8 @@ const ProductListingPage = () => {
       state: string;
       timestamp: number;
       uid: string;
-    }| DocumentData)[]
+      productUrl: string;
+    }| DocumentData )[]
   );
  
 

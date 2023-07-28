@@ -60,7 +60,7 @@ const AddProductPage = () => {
     } = productDetails;
 
     const storageRef = ref(storage, `products/${productID}`);
-    if(!productPhoto) return;
+    if (!productPhoto) return;
     uploadBytes(storageRef, productPhoto)
       .then(() => {
         console.log("Uploaded a blob or file!");
@@ -261,8 +261,6 @@ const AddProductPage = () => {
                   </p>
                 </div>
 
-                
-
                 <div className="col-span-full">
                   <label
                     htmlFor="cover-photo"
@@ -272,7 +270,6 @@ const AddProductPage = () => {
                   </label>
                   <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                     <div className="text-center">
-                      
                       <div className="mt-4 flex text-sm leading-6 text-gray-600">
                         <label
                           htmlFor="file-upload"
@@ -285,13 +282,16 @@ const AddProductPage = () => {
                             type="file"
                             className="sr-only"
                             onChange={(e) => {
-                              setProductDetails({
-                                ...productDetails,
-                                productPhoto: e.target.files[0],
-                              });
-                              setProductPhotoPreview(
-                                URL.createObjectURL(e.target.files[0])
-                              );
+                              const selectedFiles = e.target?.files;
+                              if (selectedFiles && selectedFiles.length > 0) {
+                                setProductDetails({
+                                  ...productDetails,
+                                  productPhoto: selectedFiles[0],
+                                });
+                                setProductPhotoPreview(
+                                  URL.createObjectURL(selectedFiles[0])
+                                );
+                              }
                             }}
                           />
                         </label>
@@ -308,7 +308,9 @@ const AddProductPage = () => {
                         {productPhotoPreview ? (
                           <img className="h-64" src={productPhotoPreview} />
                         ) : (
-                          <p className="text-indigo-600 font-medium">Product image Preview</p>
+                          <p className="text-indigo-600 font-medium">
+                            Product image Preview
+                          </p>
                         )}
                       </div>
                     </div>
@@ -326,7 +328,6 @@ const AddProductPage = () => {
               </p>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                
                 <div className="col-span-full">
                   <label
                     htmlFor="collage-name"
@@ -421,7 +422,6 @@ const AddProductPage = () => {
                       }}
                     />
                   </div>
-                  
                 </div>
                 <div className="sm:col-span-full">
                   <label

@@ -39,6 +39,7 @@ const NavBar = (props: { isHomePage: boolean; }) => {
         className="h-[40px]"
         src={smallLogo}
         alt="CampusReuseHub"
+        loading="lazy"
       />
       {(user.length > 0 && (
         <>
@@ -141,14 +142,14 @@ const NavBar = (props: { isHomePage: boolean; }) => {
             <div className="absolute top-11 w-full left-0  md:block md:w-auto sm:hidden  ">
               <ul className="flex flex-col font-medium mt-8 mx-4 p-4 bg-white shadow-md rounded sm:hidden">
                 <li className="hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer">
-                  <a href="/signup" className="block py-2 pl-3 pr-4 sm:hidden">
+                  <button onClick={()=>handleClick(SIGNUP)} className="block py-2 pl-3 pr-4 sm:hidden">
                     Sign up
-                  </a>
+                  </button>
                 </li>
                 <li className="hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer">
-                  <a href="/login" className="block py-2 pl-3 pr-4 sm:hidden">
+                  <button onClick={()=>handleClick(LOGIN)} className="block py-2 pl-3 pr-4 sm:hidden">
                     Log in
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>

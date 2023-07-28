@@ -2,9 +2,10 @@ import { useState } from "react";
 import { auth } from "../utilities/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { PROFILE } from "../utilities/routes";
+import { PLP, SIGNUP } from "../utilities/routes";
 import toast,{ Toaster } from 'react-hot-toast';
 import { firebaseErrors } from "../utilities/firebaseErrors";
+import Logo from "../assets/Logo.svg";
 
 
 const Login = () => {
@@ -14,7 +15,8 @@ const Login = () => {
     password: "",
   });
 
-  function loginAuthHandler() {
+  function loginAuthHandler(e: { preventDefault: () => void; }) {
+    e.preventDefault();
     if(loginAuth.email.length < 1){
       toast.error("Email cannot be empty");
       return;
@@ -28,7 +30,7 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        navigate(PROFILE);
+        return navigate(PLP);
         // ...
       })
       .catch((error) => {
@@ -69,8 +71,9 @@ const Login = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 sm:h-20 w-auto"
-          src="../public/logo.svg"
+          src={Logo}
           alt="CampusReuseHub"
+          loading="lazy"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Login to your account
@@ -139,9 +142,9 @@ const Login = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Don’t have an account yet?{' '}
-          <a href="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          <button onClick={()=>navigate(SIGNUP)} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Sign Up
-          </a>
+          </button>
         </p>
       </div>
     </div>

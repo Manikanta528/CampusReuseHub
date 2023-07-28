@@ -6,9 +6,10 @@ import { addDoc, collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { firebaseErrors } from "../utilities/firebaseErrors";
 
-import { PROFILE } from "../utilities/routes";
+import { LOGIN, PLP } from "../utilities/routes";
 
 import toast, { Toaster } from 'react-hot-toast';
+import Logo from "../assets/Logo.svg";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -25,14 +26,15 @@ const SignUp = () => {
     const usersCollectionRef = collection(db, "users");
     addDoc(usersCollectionRef, user)
       .then(() => {
-        navigate(PROFILE);
+        navigate(PLP);
       })
       .catch((error) => {
         console.error("Error adding document: ", error);
       });
   }
 
-  function signUpAuthHandler() {
+  function signUpAuthHandler(e: { preventDefault: () => void; }) {
+    e.preventDefault();
     if(signUpAuth.name.length < 4) {
       toast.error("Full name should be at least 4 characters long");
       return;
@@ -93,8 +95,9 @@ const SignUp = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 sm:h-20 w-auto"
-          src="../public/logo.svg"
+          src={Logo}
           alt="CampusReuseHub"
+          loading="lazy"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
@@ -187,9 +190,9 @@ const SignUp = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Already have an account?{' '}
-          <a href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          <button onClick={()=>navigate(LOGIN)} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Login
-          </a>
+          </button>
         </p>
       </div>
     </div>

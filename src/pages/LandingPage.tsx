@@ -1,6 +1,9 @@
 
 import NavBar from "../components/NavBar";
+import { SIGNUP } from "../utilities/routes";
+import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
+  const navigate = useNavigate();
   
   return (
     <>
@@ -8,7 +11,7 @@ const LandingPage = () => {
     <div className="bg-white">
       <div className="relative isolate h-screen bg-white opacity-80 bg-background-pattern bg-26 ">
         
-      <NavBar/>
+      <NavBar isHomePage= {true}/>
         <div className="mx-auto max-w-2xl py-32 px-8 sm:px-0 sm:py-48 lg:py-56">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -32,12 +35,12 @@ const LandingPage = () => {
             Buy, sell, and chat with fellow students for textbooks, stationery, and more within your campus community and beyond.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="/signup"
+              <button
+                onClick={() => {navigate(SIGNUP)}}
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
-              </a>
+              </button>
             </div>
           </div>
         </div>

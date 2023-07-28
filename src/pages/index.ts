@@ -5,6 +5,7 @@ import ProductListingPage from "./ProductListingPage";
 import Profile from "./Profile";
 import SignUp from "./SignUp";
 import UserChat from "./UserChat";
+import AddProductPage from "./AddProductPage";
 export default LandingPage;
 export {
   Login,
@@ -13,4 +14,5 @@ export {
   Profile,
   SignUp,
   UserChat,
+  AddProductPage,
 };

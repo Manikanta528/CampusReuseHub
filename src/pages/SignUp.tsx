@@ -9,6 +9,7 @@ import { firebaseErrors } from "../utilities/firebaseErrors";
 import { PLP } from "../utilities/routes";
 
 import toast, { Toaster } from 'react-hot-toast';
+import Logo from "../assets/Logo.svg";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -94,7 +95,7 @@ const SignUp = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 sm:h-20 w-auto"
-          src="../public/logo.svg"
+          src={Logo}
           alt="CampusReuseHub"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

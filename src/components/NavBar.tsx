@@ -7,6 +7,7 @@ import MinIdentityIcon from "../components/MinIdentityIcon";
 import { getUserData } from "../pages/Profile";
 import { signOut } from "firebase/auth";
 import { HiLogout , HiUserCircle } from "react-icons/hi";
+import smallLogo from "../assets/small-logo.svg";
 
 const NavBar = (props: { isHomePage: boolean; }) => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const NavBar = (props: { isHomePage: boolean; }) => {
     <div className="flex justify-between bg-white items-center h-16 sticky top-0 backdrop-blur px-6 sm:px-12  shadow">
       <img
         className="h-[40px]"
-        src="../logo.svg"
+        src={smallLogo}
         alt="CampusReuseHub"
       />
       {(user.length > 0 && (

@@ -2,159 +2,160 @@ import Header from "../components/Header";
 import { PLP } from "../utilities/routes";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import toster ,{ Toaster } from "react-hot-toast";
-import { storage , db , auth } from "../utilities/firebase";
-import { ref , uploadBytes} from "firebase/storage";
+import toster, { Toaster } from "react-hot-toast";
+import { storage, db, auth } from "../utilities/firebase";
+import { ref, uploadBytes } from "firebase/storage";
 import { uid } from "uid";
-import { addDoc, collection } from "firebase/firestore"; 
-
+import { addDoc, collection } from "firebase/firestore";
 
 const AddProductPage = () => {
-    const navigate = useNavigate();
-    const [productDetails, setProductDetails] = useState({
-        productName : "",
-        productDescription : "",
-        productPhoto : null,
-        collageName : "",
-        city : "",
-        state : "",
-        country : "",
-        postalCode : "",
-        productPrice : 0,
-    } as {
-        productName : string,
-        productDescription : string,
-        productPhoto : null | File,
-        collageName : string,
-        city : string,
-        state : string,
-        country : string,
-        postalCode : string,
-        productPrice : number,
-    });
+  const navigate = useNavigate();
+  const [productDetails, setProductDetails] = useState({
+    productName: "",
+    productDescription: "",
+    productPhoto: null,
+    collageName: "",
+    city: "",
+    state: "",
+    country: "",
+    postalCode: "",
+    productPrice: 0,
+  } as {
+    productName: string;
+    productDescription: string;
+    productPhoto: null | File;
+    collageName: string;
+    city: string;
+    state: string;
+    country: string;
+    postalCode: string;
+    productPrice: number;
+  });
+  const [productPhotoPreview, setProductPhotoPreview] = useState("");
 
-    const uploadData = (productID: string, productDetails: {
-      productName : string,
-      productDescription : string,
-      productPhoto : null | File,
-      collageName : string,
-      city : string,
-      state : string,
-      country : string,
-      postalCode : string,
-      productPrice : number,
-    }) => {
-      const {
-        productName,
-        productDescription,
-        productPhoto,
-        collageName,
-        city,
-        state,
-        country,
-        postalCode,
-        productPrice,
-      } = productDetails;
-    
-      const storageRef = ref(storage, `products/${productID}`);
-      uploadBytes(storageRef, productPhoto).then(() => {
-        console.log('Uploaded a blob or file!');
-      }).then(() => {
+  const uploadData = (
+    productID: string,
+    productDetails: {
+      productName: string;
+      productDescription: string;
+      productPhoto: null | File;
+      collageName: string;
+      city: string;
+      state: string;
+      country: string;
+      postalCode: string;
+      productPrice: number;
+    }
+  ) => {
+    const {
+      productName,
+      productDescription,
+      productPhoto,
+      collageName,
+      city,
+      state,
+      country,
+      postalCode,
+      productPrice,
+    } = productDetails;
+
+    const storageRef = ref(storage, `products/${productID}`);
+    uploadBytes(storageRef, productPhoto)
+      .then(() => {
+        console.log("Uploaded a blob or file!");
+      })
+      .then(() => {
         const productsCollectionRef = collection(db, "products");
         addDoc(productsCollectionRef, {
-          uid : productID,
-          productName : productName,
-          productDescription : productDescription,
-          productPhoto : `products/${productID}`,
-          collageName : collageName,
-          city : city,
-          state : state,
-          country : country,
-          postalCode : postalCode,
-          productPrice : productPrice,
-          timestamp : Date.now(),
-          sellerID : auth.currentUser?.uid,
-        })
-      })
-    
-      
+          uid: productID,
+          productName: productName,
+          productDescription: productDescription,
+          productPhoto: `products/${productID}`,
+          collageName: collageName,
+          city: city,
+          state: state,
+          country: country,
+          postalCode: postalCode,
+          productPrice: productPrice,
+          timestamp: Date.now(),
+          sellerID: auth.currentUser?.uid,
+        });
+      });
+  };
+
+  function addProductHandler(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    console.log(productDetails);
+    const {
+      productName,
+      productDescription,
+      productPhoto,
+      collageName,
+      city,
+      state,
+      country,
+      postalCode,
+      productPrice,
+    } = productDetails;
+
+    if (!productName || productName.trim() === "") {
+      toster.error("Product name is required!");
+      return;
     }
 
-    function addProductHandler(e: { preventDefault: () => void; }) {
-        e.preventDefault();
-        console.log(productDetails);
-        const {
-            productName,
-            productDescription,
-            productPhoto,
-            collageName,
-            city,
-            state,
-            country,
-            postalCode,
-            productPrice,
-          } = productDetails;
-        
-          if (!productName || productName.trim() === "") {
-            toster.error("Product name is required!");
-            return;
-          }
-        
-          if (!productDescription || productDescription.trim() === "") {
-            toster.error("Product description is required!");
-            return;
-          }
-        
-          if (!productPhoto) {
-            toster.error("Product photo is required!");
-            return;
-          }
-        
-          if (!collageName || collageName.trim() === "") {
-            toster.error("Collage name is required!");
-            return;
-          }
-        
-          if (!city || city.trim() === "") {
-            toster.error("City is required!");
-            return;
-          }
-        
-          if (!state || state.trim() === "") {
-            toster.error("State is required!");
-            return;
-          }
-        
-          if (!country || country.trim() === "") {
-            toster.error("Country is required!");
-            return;
-          }
-          const isValidPostalCode = /^\d{6}$/.test(postalCode);
-
-          if (!isValidPostalCode) {
-            toster.error("Invalid postal code! Please enter a 6-digit PIN code.");
-            return false;
-          }
-
-          if(!productPrice || productPrice < 0){
-            toster.error("Product price is required!");
-            return;
-          }
-          const productID = uid(16);
-
-          uploadData(productID, productDetails);
-          toster.success("Product added successfully!");
-          setTimeout(() => {
-            navigate(PLP);
-          }, 1000);         
+    if (!productDescription || productDescription.trim() === "") {
+      toster.error("Product description is required!");
+      return;
     }
 
+    if (!productPhoto) {
+      toster.error("Product photo is required!");
+      return;
+    }
 
+    if (!collageName || collageName.trim() === "") {
+      toster.error("Collage name is required!");
+      return;
+    }
+
+    if (!city || city.trim() === "") {
+      toster.error("City is required!");
+      return;
+    }
+
+    if (!state || state.trim() === "") {
+      toster.error("State is required!");
+      return;
+    }
+
+    if (!country || country.trim() === "") {
+      toster.error("Country is required!");
+      return;
+    }
+    const isValidPostalCode = /^\d{6}$/.test(postalCode);
+
+    if (!isValidPostalCode) {
+      toster.error("Invalid postal code! Please enter a 6-digit PIN code.");
+      return false;
+    }
+
+    if (!productPrice || productPrice < 0) {
+      toster.error("Product price is required!");
+      return;
+    }
+    const productID = uid(16);
+
+    uploadData(productID, productDetails);
+    toster.success("Product added successfully!");
+    setTimeout(() => {
+      navigate(PLP);
+    }, 1000);
+  }
   return (
     <div className="bg-white">
       <div className="opacity-80 bg-background-pattern bg-26  h-fit">
         <Header />
-        <Toaster/>
+        <Toaster />
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -163,7 +164,7 @@ const AddProductPage = () => {
             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
             style={{
               clipPath:
-                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
             }}
           />
         </div>
@@ -196,10 +197,10 @@ const AddProductPage = () => {
                         className="block w-full rounded-md border-0 px-2.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder="Enter product name"
                         onChange={(e) => {
-                            setProductDetails({
-                                ...productDetails,
-                                productName : e.target.value,
-                            });
+                          setProductDetails({
+                            ...productDetails,
+                            productName: e.target.value,
+                          });
                         }}
                       />
                     </div>
@@ -222,10 +223,10 @@ const AddProductPage = () => {
                         className="block w-full rounded-md border-0 px-2.5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder="Enter product price"
                         onChange={(e) => {
-                            setProductDetails({
-                                ...productDetails,
-                                productPrice : parseInt(e.target.value),
-                            });
+                          setProductDetails({
+                            ...productDetails,
+                            productPrice: parseInt(e.target.value),
+                          });
                         }}
                       />
                     </div>
@@ -248,8 +249,8 @@ const AddProductPage = () => {
                       defaultValue={""}
                       onChange={(e) => {
                         setProductDetails({
-                            ...productDetails,
-                            productDescription : e.target.value,
+                          ...productDetails,
+                          productDescription: e.target.value,
                         });
                       }}
                     />
@@ -283,10 +284,13 @@ const AddProductPage = () => {
                             type="file"
                             className="sr-only"
                             onChange={(e) => {
-                                setProductDetails({
-                                    ...productDetails,
-                                    productPhoto : e.target.files[0],
-                                });
+                              setProductDetails({
+                                ...productDetails,
+                                productPhoto: e.target.files[0],
+                              });
+                              setProductPhotoPreview(
+                                URL.createObjectURL(e.target.files[0])
+                              );
                             }}
                           />
                         </label>
@@ -295,6 +299,17 @@ const AddProductPage = () => {
                       <p className="text-xs leading-5 text-gray-600">
                         PNG, JPG up to 10MB
                       </p>
+                    </div>
+                  </div>
+                  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                    <div className="text-center">
+                      <div className="mt-4 flex items-center text-sm leading-6 h-64 text-gray-600  w-auto">
+                        {productPhotoPreview ? (
+                          <img className="h-64" src={productPhotoPreview} />
+                        ) : (
+                          <p className="text-indigo-600 font-medium">Product image Preview</p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -325,12 +340,12 @@ const AddProductPage = () => {
                       id="collage-name"
                       autoComplete="collage-name"
                       className="block w-full px-2.5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        onChange={(e) => {
-                            setProductDetails({
-                                ...productDetails,
-                                collageName : e.target.value,
-                            }); 
-                        }}
+                      onChange={(e) => {
+                        setProductDetails({
+                          ...productDetails,
+                          collageName: e.target.value,
+                        });
+                      }}
                     />
                   </div>
                 </div>
@@ -349,12 +364,12 @@ const AddProductPage = () => {
                       id="city"
                       autoComplete="address-level2"
                       className="block w-full px-2.5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        onChange={(e) => {
-                            setProductDetails({
-                                ...productDetails,
-                                city : e.target.value,
-                            });
-                        }}
+                      onChange={(e) => {
+                        setProductDetails({
+                          ...productDetails,
+                          city: e.target.value,
+                        });
+                      }}
                     />
                   </div>
                 </div>
@@ -373,12 +388,12 @@ const AddProductPage = () => {
                       id="region"
                       autoComplete="address-level1"
                       className="block w-full px-2.5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        onChange={(e) => {
-                            setProductDetails({
-                                ...productDetails,
-                                state : e.target.value,
-                            });
-                        }}
+                      onChange={(e) => {
+                        setProductDetails({
+                          ...productDetails,
+                          state: e.target.value,
+                        });
+                      }}
                     />
                   </div>
                 </div>
@@ -397,12 +412,12 @@ const AddProductPage = () => {
                       id="postal-code"
                       autoComplete="postal-code"
                       className="block w-full px-2.5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        onChange={(e) => {
-                            setProductDetails({
-                                ...productDetails,
-                                postalCode : e.target.value,
-                            });
-                        }}
+                      onChange={(e) => {
+                        setProductDetails({
+                          ...productDetails,
+                          postalCode: e.target.value,
+                        });
+                      }}
                     />
                   </div>
                   
@@ -422,15 +437,14 @@ const AddProductPage = () => {
                       className="block w-full rounded-md px-2.5 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       onChange={(e) => {
                         setProductDetails({
-                            ...productDetails,
-                            country : e.target.value,
+                          ...productDetails,
+                          country: e.target.value,
                         });
                       }}
-                    /> 
-                    
+                    />
                   </div>
                 </div>
-            </div>
+              </div>
             </div>
           </div>
 

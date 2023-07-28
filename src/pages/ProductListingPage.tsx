@@ -22,9 +22,7 @@ const ProductListingPage = () => {
       uid: string;
     }| DocumentData)[]
   );
-  const setImageUrl = (uid : string) => {
-    
-  }
+ 
 
   useEffect(() => {
     const docsRef = collection(db, "products");

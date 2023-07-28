@@ -60,6 +60,7 @@ const AddProductPage = () => {
     } = productDetails;
 
     const storageRef = ref(storage, `products/${productID}`);
+    if(!productPhoto) return;
     uploadBytes(storageRef, productPhoto)
       .then(() => {
         console.log("Uploaded a blob or file!");

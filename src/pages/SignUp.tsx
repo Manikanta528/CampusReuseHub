@@ -6,7 +6,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { firebaseErrors } from "../utilities/firebaseErrors";
 
-import { PLP } from "../utilities/routes";
+import { LOGIN, PLP } from "../utilities/routes";
 
 import toast, { Toaster } from 'react-hot-toast';
 import Logo from "../assets/Logo.svg";
@@ -190,9 +190,9 @@ const SignUp = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Already have an account?{' '}
-          <a href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          <button onClick={()=>navigate(LOGIN)} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Login
-          </a>
+          </button>
         </p>
       </div>
     </div>

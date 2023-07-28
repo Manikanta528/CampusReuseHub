@@ -2,7 +2,7 @@ import { useState } from "react";
 import { auth } from "../utilities/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { PLP } from "../utilities/routes";
+import { PLP, SIGNUP } from "../utilities/routes";
 import toast,{ Toaster } from 'react-hot-toast';
 import { firebaseErrors } from "../utilities/firebaseErrors";
 import Logo from "../assets/Logo.svg";
@@ -142,9 +142,9 @@ const Login = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Don’t have an account yet?{' '}
-          <a href="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          <button onClick={()=>navigate(SIGNUP)} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Sign Up
-          </a>
+          </button>
         </p>
       </div>
     </div>

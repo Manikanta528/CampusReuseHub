@@ -140,18 +140,14 @@ const NavBar = (props: { isHomePage: boolean; }) => {
           </button>
           {showMenu && (
             <div className="absolute top-11 w-full left-0  md:block md:w-auto sm:hidden  ">
-              <ul className="flex flex-col font-medium mt-8 mx-4 p-4 bg-white shadow-md rounded sm:hidden">
-                <li className="hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer">
-                  <button onClick={()=>handleClick(SIGNUP)} className="block py-2 pl-3 pr-4 sm:hidden">
+              <div className="flex flex-col font-medium mt-8 mx-4 p-4 bg-white shadow-lg rounded-xl sm:hidden gap-2">
+                  <button onClick={()=>handleClick(SIGNUP)} className="block py-2 pl-3 pr-4 sm:hidden hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer text-left border-[1px] hover:border-indigo-600/70">
                     Sign up
                   </button>
-                </li>
-                <li className="hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer">
-                  <button onClick={()=>handleClick(LOGIN)} className="block py-2 pl-3 pr-4 sm:hidden">
+                  <button onClick={()=>handleClick(LOGIN)} className="block py-2 pl-3 pr-4 sm:hidden hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer text-left border-[1px] hover:border-indigo-600/70">
                     Log in
                   </button>
-                </li>
-              </ul>
+              </div>
             </div>
           )}
         </>)))

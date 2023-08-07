@@ -26,7 +26,6 @@ const UserChat = () => {
   const [chatProfile, setChatProfile] = useState<string[]>([]);
 
 
-  setReceiver(state?.receiverId);
   const handleMessage = () => {
     if (message.length <= 0) return;
     let chatId : string;
@@ -154,6 +153,7 @@ const UserChat = () => {
       auth.onAuthStateChanged((user) => {
         if (user) {
           setSender(user.uid);
+          setReceiver(state?.receiverId);
         } else {
           setShowPopUp(true);
         }

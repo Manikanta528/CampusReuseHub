@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { CgCalendarDates } from "react-icons/cg";
 import { AiTwotoneCrown } from "react-icons/ai";
 
-import { db, storage } from "../utilities/firebase";
+import { db, storage, auth } from "../utilities/firebase";
 import {
   getDocs,
   query,
@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import Header from "../components/Header";
-import { PLP } from "../utilities/routes";
+import { LOGIN, PLP } from "../utilities/routes";
 
 
 const ProductDescriptionPage = () => {
@@ -23,6 +23,7 @@ const ProductDescriptionPage = () => {
   //console.log(id);
   const [product, setProduct] = useState({} as DocumentData);
   const [productImage, setProductImage] = useState("");
+  const [currentUserId, setCurrentUserId] = useState("");
 
   const [productDate, setProductDate] = useState("Loading...");
   const [productSeller, setProductSeller] = useState({} as DocumentData);
@@ -65,6 +66,18 @@ const ProductDescriptionPage = () => {
         })
     }
   }, [product]);
+
+  useEffect(() =>{
+    if(auth){
+      auth.onAuthStateChanged((user) => {
+        if(user){
+          setCurrentUserId(user.uid)
+        }else{
+          navigate(LOGIN);
+        }
+      })
+    }
+  })
 
   return (
     <div className="bg-white">
@@ -162,8 +175,18 @@ const ProductDescriptionPage = () => {
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={() => {
+                  navigate(`/chat`,{
+                    state : {
+                      senderId : currentUserId,
+                      receiverId : product.sellerID
+                    }
+                  });
+                }}
+                disabled ={product.sellerID  == currentUserId ? true : false}
+                style={{cursor : product.sellerID  == currentUserId ? "not-allowed" : "pointer"}}
               >
-                Chat with seller
+                {product.sellerID  == currentUserId ? "You can't chat for your product ": "Chat with seller" }
               </button>
             </div>
 

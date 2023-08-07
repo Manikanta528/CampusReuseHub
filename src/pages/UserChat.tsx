@@ -19,7 +19,6 @@ const UserChat = () => {
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState("");
   const [messageSent, setMessageSent] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [receiver, setReceiver] = useState(state?.receiverId);
   const [sender, setSender] = useState(state?.senderId);
   const [showPopUp, setShowPopUp] = useState(false);
@@ -27,7 +26,7 @@ const UserChat = () => {
   const [chatProfile, setChatProfile] = useState<string[]>([]);
 
 
-
+  setReceiver(state?.receiverId);
   const handleMessage = () => {
     if (message.length <= 0) return;
     let chatId : string;

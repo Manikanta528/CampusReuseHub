@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { ADD_PRODUCT, HOME, LOGIN, PROFILE, SIGNUP } from "../utilities/routes";
+import { ADD_PRODUCT, CHAT, HOME, LOGIN, PROFILE, SIGNUP } from "../utilities/routes";
 
 import { useState, useEffect } from "react";
 import { auth } from "../utilities/firebase";
 import MinIdentityIcon from "../components/MinIdentityIcon";
 import { getUserData } from "../pages/Profile";
 import { signOut } from "firebase/auth";
-import { HiLogout , HiUserCircle } from "react-icons/hi";
+import { HiLogout , HiUserCircle, HiChat } from "react-icons/hi";
+
 import smallLogo from "../assets/small-logo.svg";
 
 const NavBar = (props: { isHomePage: boolean; }) => {
@@ -81,6 +82,17 @@ const NavBar = (props: { isHomePage: boolean; }) => {
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                   </span>
                   <span> Sell Item</span>
+                </button>
+                <button
+                  className="py-2 pl-3 pr-4 flex items-center justify-start gap-4  text-black border-[1px] border-gray-200 hover:text-black hover:border-sky-200 hover:bg-sky-200 rounded-lg cursor-pointer"
+                  onClick={() => {
+                    navigate(CHAT);
+                  }}
+                >
+                 <span className="relative flex h-fit w-fit">
+                  <HiChat />
+                  </span>
+                  <span> Chat</span>
                 </button>
                 <button
                   className="py-2 pl-3 pr-4 flex items-center justify-start gap-4  text-black border-[1px] border-gray-200 hover:text-black hover:border-red-200 hover:bg-red-200 rounded-lg cursor-pointer"

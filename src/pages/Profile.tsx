@@ -11,10 +11,9 @@ import { HOME } from "../utilities/routes";
 export async function  getUserData(uid : string): Promise<string> {
   const q = query(collection(db, "users"), where("uid", "==", uid));
   const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(() => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data().name);
-    
+    //console.log(doc.id, " => ", doc.data().name);  
   });
   return querySnapshot.docs[0].data().name;
 }

@@ -24,7 +24,7 @@ const NavBar = (props: { isHomePage: boolean; }) => {
             setUser(name);
           });
         } else {
-          console.log("No user");
+          //console.log("No user");
           if(props.isHomePage != true)
             navigate(HOME);
         }

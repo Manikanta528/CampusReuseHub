@@ -26,10 +26,10 @@ const Login = () => {
       return;
     }
     signInWithEmailAndPassword(auth, loginAuth.email, loginAuth.password)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in
-        const user = userCredential.user;
-        console.log(user);
+        //const user = userCredential.user;
+        //console.log(user);
         return navigate(PLP);
         // ...
       })

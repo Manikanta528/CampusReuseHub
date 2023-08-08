@@ -3,7 +3,7 @@ import { LOGIN } from '../utilities/routes';
 const PopUp = () => {
     const navigate = useNavigate();
   return (
-    <div className="fixed flex items-center justify-center z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%)] max-h-screen bg-slate-500/50">
+    <div className="fixed flex items-center justify-center z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%)] w-full max-h-screen bg-slate-500/50">
     <div className="relative w-full max-w-md max-h-full">
         <div className="relative bg-white rounded-2xl shadow ">
             <div className="py-12 opacity-80 bg-background-pattern bg-26 rounded-2xl flex-col justify-center items-center text-center">

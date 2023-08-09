@@ -35,7 +35,7 @@ const NavBar = (props: { isHomePage: boolean; }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   return (
-    <div className="flex justify-between bg-white items-center h-16 sticky top-0 backdrop-blur px-6 sm:px-12  shadow">
+    <div className="flex z-10 justify-between bg-white items-center h-16 sticky top-0 backdrop-blur px-6 sm:px-12  shadow">
       <img
         className="h-[40px]"
         src={smallLogo}

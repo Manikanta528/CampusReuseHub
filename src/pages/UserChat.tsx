@@ -16,7 +16,7 @@ import {
 } from "firebase/firestore";
 
 import PopUp from "../components/PopUp";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ChatProfileComponent from "../components/ChatProfileComponent";
 
 const UserChat = () => {
@@ -204,12 +204,22 @@ const UserChat = () => {
                     {/* ChatTextComponent is used here */}
                     {chat.length == 0 && (
                       <div className="col-span-12 flex flex-col items-center justify-center">
-                        <span className="font-medium py-2 text-gray-400 text-sm">
+                        {receiver !== undefined && <span className="font-medium py-2 text-gray-400 text-sm">
                           No messages yet with {chats.map((data) => {
                             if(data.u1 == receiver) return data.u1Name;
                             else if( data.u2 == receiver) return data.u2Name;
                           })} send the first message... 🚀
-                        </span>
+                        </span>}
+                        {
+                          receiver == undefined && chats.length != 0 && <span className="font-medium py-2 text-gray-400 text-sm">
+                          Select a chat to start messaging... 🚀
+                          </span>
+                        }
+                        {
+                          chats.length == 0 && <span className="font-medium py-2 text-gray-400 text-sm">
+                          No chats yet... 🚀 To chat with someone, go to the <Link to="/products" className="text-indigo-500">Users</Link> page and start a chat with someone.
+                          </span>
+                        }
                       </div>
                     )}
                     {chat.map((item, i) => {
@@ -228,7 +238,7 @@ const UserChat = () => {
                 </div>
               </div>
 
-              <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+              {receiver !== undefined && <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
                 <div className="flex-grow ">
                   <div className="relative w-full">
                     <input
@@ -267,7 +277,7 @@ const UserChat = () => {
                     </span>
                   </button>
                 </div>
-              </div>
+              </div>}
             </div>
           </div>
         </div>

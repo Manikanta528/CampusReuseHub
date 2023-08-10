@@ -21,8 +21,8 @@ const NavBar = (props: { isHomePage: boolean; }) => {
     if (auth) {
       auth.onAuthStateChanged((user) => {
         if (user) {
-          getUserData(user.uid).then((name: string) => {
-            setUser(name);
+          getUserData(user.uid).then((data) => {
+            setUser(data.name);
           });
         } else {
           //console.log("No user");

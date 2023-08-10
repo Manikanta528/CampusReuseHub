@@ -17,11 +17,13 @@ const SignUp = () => {
     name : "",
     email: "",
     password: "",
+    timestamp: Date.now(),
   });
   function createUserInFirestore(user : {
     email: string | null,
     uid: string,
     name : string,
+    timestamp: number,
   }) {
     const usersCollectionRef = collection(db, "users");
     addDoc(usersCollectionRef, user)
@@ -56,6 +58,7 @@ const SignUp = () => {
           email: userCredential.user.email,
           uid: userCredential.user.uid,
           name : signUpAuth.name,
+          timestamp: Date.now(),
         });
         // ...
       })

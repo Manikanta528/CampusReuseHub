@@ -247,8 +247,8 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-        <footer className='text-white px-6 pt-12 flex justify-start sm:justify-center items-center gap-4'>
-          <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer" className='text-white underline cursor-pointer'><button className='bg-black  px-4 py-2 rounded-md'> Deployed By <SiNetlify className='inline text-blue-600'/> Netlify </button></a>
+        <footer className='text-black px-6 pt-12 flex justify-start sm:justify-center items-center gap-4'>
+          <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer" className=' underline cursor-pointer'><button className='bg-white  px-4 py-2 rounded-md'> Deployed By <SiNetlify className='inline text-[#20c6b7]'/> Netlify </button></a>
         </footer> 
         </section>
       </div>

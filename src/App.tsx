@@ -1,8 +1,30 @@
 import { Route, Routes } from "react-router-dom";
-import LandingPage,{Login,SignUp,ProductDescriptionPage,ProductListingPage,UserChat, Profile , AddProductPage } from "./pages";
-import { CHAT, HOME, LOGIN, PDP, PLP, SIGNUP, PROFILE, ADD_PRODUCT } from "./utilities/routes";
+import { useEffect } from "react";
+import LandingPage, {
+  Login,
+  SignUp,
+  ProductDescriptionPage,
+  ProductListingPage,
+  UserChat,
+  Profile,
+  AddProductPage,
+} from "./pages";
+import {
+  CHAT,
+  HOME,
+  LOGIN,
+  PDP,
+  PLP,
+  SIGNUP,
+  PROFILE,
+  ADD_PRODUCT,
+} from "./utilities/routes";
+import { Bugfender } from "@bugfender/sdk";
 
 function App() {
+  useEffect(() => {
+    Bugfender.log("App Created");
+  }, []);
 
   return (
     <Routes>
@@ -18,4 +40,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

@@ -7,6 +7,9 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Bugfender } from '@bugfender/sdk';
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 Bugfender.init({
   appKey: import.meta.env.VITE_BUGFENDER_APP_KEY,
   // apiURL: 'https://api.bugfender.com',
@@ -19,6 +22,7 @@ Bugfender.init({
   // version: '',
   // build: '',
 });
+AOS.init();
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

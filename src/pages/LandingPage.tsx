@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import NavBar from "../components/NavBar";
 import { SIGNUP } from "../utilities/routes";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,8 @@ const LandingPage = () => {
       html_url: string;
     }[]
   );
+  const featureRef = useRef<HTMLDivElement>(null);
+  const [load, setLoad] = useState(false);
 
   const campusReuseHubFeatures = [
     {
@@ -55,6 +57,9 @@ const LandingPage = () => {
   // to fetch github repo details
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoad(true);
+    }, 1000);
     fetch("https://api.github.com/repos/Manikanta528/CampusReuseHub")
       .then((response) => response.json())
       .then((data) => {
@@ -95,7 +100,7 @@ const LandingPage = () => {
         <NavBar isHomePage={true} />
         <main className="relative isolate bg-white opacity-80 bg-background-pattern bg-26 h-screen">
           <div className="flex gap-4 px-12 pt-12 justify-center sm:justify-end ">
-            <div className="bg-white flex group ">
+            <div className="bg-white flex group " data-aos="flip-up">
               <a
                 href={"https://github.com/Manikanta528/CampusReuseHub"}
                 target="_blank"
@@ -112,7 +117,7 @@ const LandingPage = () => {
                 <span>{githubRepo.stargazers_count}</span>
               </a>
             </div>
-            <div className="bg-white flex rounded group">
+            <div className="bg-white flex rounded group" data-aos="flip-up">
               <a
                 href={"https://github.com/Manikanta528/"}
                 target="_blank"
@@ -148,11 +153,19 @@ const LandingPage = () => {
             </div>
 
             <div className="text-center ">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Your <span className="text-bold text-indigo-600">College</span>{" "}
-                Essentials Marketplace
-              </h1>
-              <p className="mt-6 text-base sm:text-md lg:text-lg leading-8 text-gray-600">
+              <div
+                id="title"
+                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl leading-10"
+                data-aos="zoom-in"
+                data-aos-duration="1500"
+              >
+                <span>
+                  Your{" "}
+                  <span className="text-bold text-indigo-600">College</span>{" "}
+                  Essentials Marketplace
+                </span>
+              </div>
+              <p className="mt-6 text-base sm:text-md lg:text-lg leading-8 text-gray-600" data-aos="fade-up" data-aos-duration="2500">
                 Buy, sell, and chat with fellow students for textbooks,
                 stationery, and more within your campus community and beyond.
               </p>
@@ -161,11 +174,18 @@ const LandingPage = () => {
                   onClick={() => {
                     navigate(SIGNUP);
                   }}
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="rounded-md bg-gradient-to-b from-indigo-300 to-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 shadow-lg hover:shadow-indigo-600/40 active:bg-gradient-to-bl active:from-indigo-300 active:to-indigo-600"
+                  data-aos="fade-up" data-aos-duration="2500"
                 >
                   Get started
                 </button>
-                <div className=" top-24 animate-bounce bg-white p-2 w-10 h-10 ring-1 ring-indigo-600/5 dark:ring-primary/20 shadow-lg rounded-full sm:flex items-center justify-center">
+                {load && <div
+                  className=" top-24 animate-bounce bg-white p-2 w-10 h-10 ring-1 ring-indigo-600/5 dark:ring-primary/20 shadow-lg rounded-full sm:flex items-center justify-center cursor-pointer"
+                  onClick={() => {
+                    if (featureRef.current)
+                      featureRef.current.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
                   <svg
                     className="w-6 h-6 text-indigo-600"
                     fill="none"
@@ -177,15 +197,15 @@ const LandingPage = () => {
                   >
                     <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                   </svg>
-                </div>
+                </div>}
               </div>
             </div>
           </div>
         </main>
-        <section className="bg-white py-24 sm:py-32">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl lg:text-center">
-              <h2 className="text-base font-semibold leading-7 text-indigo-600">
+        <section className="bg-white py-24 sm:py-32" ref={featureRef}>
+          <div className="mx-auto max-w-7xl px-6 lg:px-8" >
+            <div className="mx-auto max-w-2xl lg:text-center" >
+              <h2 className="text-base font-semibold leading-7 text-indigo-600" data-aos="zoom-in" data-aos-duration="1000">
                 Features
               </h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -198,22 +218,25 @@ const LandingPage = () => {
             </div>
             <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
               <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-                {campusReuseHubFeatures.map((feature) => (
-                  <div key={feature.name} className="relative pl-16">
-                    <dt className="text-base font-semibold leading-7 text-gray-900">
-                      <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                {campusReuseHubFeatures.map((feature,i) => {
+                  const duration = (i*500);
+                  return (
+                  <div key={feature.name} className="relative pl-16" >
+                    <dt className="text-base font-semibold leading-7 text-gray-900" >
+                      <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-b from-indigo-300 to-indigo-600 shadow-lg shadow-indigo-600/40" data-aos="flip-right" data-aos-duration={duration}>
                         <feature.icon
                           className="h-6 w-6 text-white"
                           aria-hidden="true"
                         />
                       </div>
-                      {feature.name}
+                      
                     </dt>
-                    <dd className="mt-2 text-base leading-7 text-gray-600">
+                    <dd className="text-base font-semibold leading-7 text-indigo-600" data-aos="fade-left" data-aos-duration={duration-500}>{feature.name}</dd>
+                    <dd className="mt-2 text-base leading-7 text-gray-600" data-aos="fade-up" data-aos-duration={duration}>
                       {feature.description}
                     </dd>
                   </div>
-                ))}
+                )})}
               </dl>
             </div>
           </div>
@@ -247,9 +270,20 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-        <footer className='text-black px-6 pt-12 flex justify-start sm:justify-center items-center gap-4'>
-          <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer" className=' underline cursor-pointer'><button className='bg-white  px-4 py-2 rounded-md'> Deployed By <SiNetlify className='inline text-[#20c6b7]'/> Netlify </button></a>
-        </footer> 
+          <footer className="text-black px-6 pt-12 flex justify-start sm:justify-center items-center gap-4">
+            <a
+              href="https://www.netlify.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className=" underline cursor-pointer"
+            >
+              <button className="bg-white  px-4 py-2 rounded-md">
+                {" "}
+                Deployed By <SiNetlify className="inline text-[#20c6b7]" />{" "}
+                Netlify{" "}
+              </button>
+            </a>
+          </footer>
         </section>
       </div>
     </>

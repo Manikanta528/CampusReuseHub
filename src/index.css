@@ -8,3 +8,14 @@ body {
   scroll-behavior: smooth;
 }
 
+html {
+  scroll-behavior: smooth;
+  word-break: break-word;
+}
+
+#title {
+  ::selection {
+    color : white;
+    background: rgb(79 70 229);
+  }
+}

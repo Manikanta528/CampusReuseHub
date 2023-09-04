@@ -6,7 +6,7 @@ import { AiTwotoneStar, AiFillGithub } from "react-icons/ai";
 import { HiOutlineDocumentAdd, HiSearch, HiChatAlt } from "react-icons/hi";
 import { FaRegHandshake } from "react-icons/fa";
 import { SiNetlify } from "react-icons/si";
-import Ecommerce from "../assets/ecommerce.svg";
+import Ecommerce from "../assets/Ecommerce.svg";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 
 const LandingPage = () => {

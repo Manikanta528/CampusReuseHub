@@ -19,3 +19,12 @@ html {
     background: rgb(79 70 229);
   }
 }
+.testimonialItem {
+  width: 414px;
+      &>div {
+          &>:global(.twitter-tweet) {
+              margin-top: 0 !important;
+              margin-bottom: 0 !important;
+          }
+      }
+}

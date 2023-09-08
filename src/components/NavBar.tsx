@@ -1,16 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import { ADD_PRODUCT, CHAT, HOME, LOGIN, PROFILE, SIGNUP } from "../utilities/routes";
+import {
+  ADD_PRODUCT,
+  CHAT,
+  HOME,
+  LOGIN,
+  PROFILE,
+  SIGNUP,
+} from "../utilities/routes";
 
 import { useState, useEffect } from "react";
 import { auth } from "../utilities/firebase";
 import MinIdentityIcon from "../components/MinIdentityIcon";
 import { getUserData } from "../pages/Profile";
 import { signOut } from "firebase/auth";
-import { HiLogout , HiUserCircle, HiChat } from "react-icons/hi";
+import { HiLogout, HiUserCircle, HiChat } from "react-icons/hi";
+import { RxCross2 } from "react-icons/rx";
 
 import smallLogo from "../assets/small-logo.svg";
 
-const NavBar = (props: { isHomePage: boolean; }) => {
+const NavBar = (props: { isHomePage: boolean }) => {
   const navigate = useNavigate();
   const handleClick = (link: string) => {
     navigate(link);
@@ -26,8 +34,7 @@ const NavBar = (props: { isHomePage: boolean; }) => {
           });
         } else {
           //console.log("No user");
-          if(props.isHomePage != true)
-            navigate(HOME);
+          if (props.isHomePage != true) navigate(HOME);
         }
       });
     }
@@ -65,8 +72,8 @@ const NavBar = (props: { isHomePage: boolean; }) => {
                     navigate(PROFILE);
                   }}
                 >
-                 <span className="relative flex h-fit w-fit">
-                  <HiUserCircle />
+                  <span className="relative flex h-fit w-fit">
+                    <HiUserCircle />
                   </span>
                   <span>Profile</span>
                 </button>
@@ -89,8 +96,8 @@ const NavBar = (props: { isHomePage: boolean; }) => {
                     navigate(CHAT);
                   }}
                 >
-                 <span className="relative flex h-fit w-fit">
-                  <HiChat />
+                  <span className="relative flex h-fit w-fit">
+                    <HiChat />
                   </span>
                   <span> Chat</span>
                 </button>
@@ -106,8 +113,8 @@ const NavBar = (props: { isHomePage: boolean; }) => {
                     });
                   }}
                 >
-                 <span className="relative flex h-fit w-fit">
-                  <HiLogout />
+                  <span className="relative flex h-fit w-fit">
+                    <HiLogout />
                   </span>
                   <span> Log Out</span>
                 </button>
@@ -115,55 +122,65 @@ const NavBar = (props: { isHomePage: boolean; }) => {
             </div>
           )}
         </>
-      )) || (
-        (( props.isHomePage &&
-        (<>
-          <div className="hidden gap-4 sm:flex  ">
+      )) ||
+        (props.isHomePage && (
+          <>
+            <div className="hidden gap-4 sm:flex  ">
+              <button
+                className="rounded-md bg-gradient-to-b from-indigo-300 to-indigo-600 px-3 py-2 text-sm  text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 shadow-sm hover:shadow-indigo-600/40 active:bg-gradient-to-bl"
+                onClick={() => handleClick(SIGNUP)}
+              >
+                {" "}
+                Sign up
+              </button>
+              <button className="" onClick={() => handleClick(LOGIN)}>
+                Login {"->"}
+              </button>
+            </div>
             <button
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm  text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => handleClick(SIGNUP)}
+              className="block gap-4 sm:hidden hover:bg-indigo-600/20  p-2 rounded"
+              onClick={() => setShowMenu((prev: boolean) => !prev)}
             >
-              {" "}
-              Sign up
+              {!showMenu ? (
+                <svg
+                  className="w-5 h-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 17 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 1h15M1 7h15M1 13h15"
+                  />
+                </svg>
+              ) : (
+                <RxCross2 className="w-5 h-5" />
+              )}
             </button>
-            <button className="" onClick={() => handleClick(LOGIN)}>
-              Login {"->"}
-            </button>
-          </div>
-          <button
-            className="block gap-4 sm:hidden hover:bg-black/20 p-2 rounded"
-            onClick={() => setShowMenu((prev: boolean) => !prev)}
-          >
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-          {showMenu && (
-            <div className="absolute top-11 w-full left-0  md:block md:w-auto sm:hidden  ">
-              <div className="flex flex-col font-medium mt-8 mx-4 p-4 bg-white shadow-lg rounded-xl sm:hidden gap-2">
-                  <button onClick={()=>handleClick(SIGNUP)} className="block py-2 pl-3 pr-4 sm:hidden hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer text-left border-[1px] hover:border-indigo-600/70">
+            {showMenu && (
+              <div className="absolute top-11 w-full left-0  md:block md:w-auto sm:hidden  ">
+                <div className="flex flex-col font-medium mt-8 mx-4 p-4 bg-white shadow-lg rounded-xl sm:hidden gap-2">
+                  <button
+                    onClick={() => handleClick(SIGNUP)}
+                    className="block py-2 pl-3 pr-4 sm:hidden  hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer text-left border-[1px] hover:border-indigo-600/70"
+                  >
                     Sign up
                   </button>
-                  <button onClick={()=>handleClick(LOGIN)} className="block py-2 pl-3 pr-4 sm:hidden hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer text-left border-[1px] hover:border-indigo-600/70">
+                  <button
+                    onClick={() => handleClick(LOGIN)}
+                    className="block py-2 pl-3 pr-4 sm:hidden hover:bg-indigo-600/70 hover:text-white rounded-md cursor-pointer text-left border-[1px] hover:border-indigo-600/70"
+                  >
                     Log in
                   </button>
+                </div>
               </div>
-            </div>
-          )}
-        </>)))
-          )}
+            )}
+          </>
+        ))}
     </div>
   );
 };

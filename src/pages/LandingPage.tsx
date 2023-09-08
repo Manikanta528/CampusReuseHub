@@ -107,7 +107,7 @@ const LandingPage = () => {
     <>
       <div className="bg-white">
         <NavBar isHomePage={true} />
-        <main className="relative isolate bg-white opacity-80 bg-background-pattern bg-26 h-screen">
+        <main className="relative isolate bg-white opacity-80 bg-background-pattern bg-26 h-min-screen h-max-fit">
           <div className="flex gap-4 px-12 pt-12 justify-center sm:justify-end ">
             <div className="bg-white flex group " data-aos="flip-up">
               <a
@@ -171,7 +171,7 @@ const LandingPage = () => {
                 data-aos-duration="3000"
               />
             </div>
-            <div className="w-full md:w-[40%] flex flex-col h-full pt-12 md:pt-12 lg:pt-2">
+            <div className="w-full md:w-[40%] flex flex-col h-full pt-24 md:pt-12 lg:pt-2">
               <div
                 id="title"
                 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl md:text-5xl lg:text-6xl leading-10"
